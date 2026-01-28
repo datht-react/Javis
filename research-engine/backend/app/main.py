@@ -1,10 +1,20 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 from app.core.llm_provider import LLMProvider, LLMRequest
 import uvicorn
 
 app = FastAPI(title="Javis Research Engine API")
+
+# Enable CORS for the frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 llm = LLMProvider()
 
 class SearchRequest(BaseModel):
